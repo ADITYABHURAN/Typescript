@@ -214,3 +214,28 @@ tsc --init
 ```
 
 ---
+
+## 9. TypeScript in the CI/CD Pipeline
+
+When we write source code in **TypeScript** and push it to **GitHub**, the **CI/CD pipeline** compiles the `.ts` code into `.js` before deployment.
+
+### How it works:
+1. **Write** code in TypeScript (`.ts` files) with strict types
+2. **Push** the TypeScript source code to GitHub
+3. **CI/CD pipeline** (e.g., GitHub Actions) runs `tsc` to compile the code
+4. TypeScript compiler **catches all type errors** at this stage — if there are errors, the build fails
+5. If compilation succeeds, the output is **plain JavaScript** (`.js` files) with **no type annotations** (types are stripped out)
+6. The compiled `.js` code is then **deployed/served** to production
+
+### Why this matters:
+- The **end user / browser / Node.js runtime** only ever runs JavaScript — they never see TypeScript
+- All datatype errors are caught **before deployment**, not at runtime
+- TypeScript types exist only at **compile time** — they are completely removed in the final `.js` output
+- This means you get the **safety of types during development** and the **performance of plain JS in production**
+
+```
+  TypeScript (.ts)  →  CI/CD (tsc compile)  →  JavaScript (.js)  →  Deployed
+  [with types]         [errors caught here]     [types removed]      [runs in browser/Node]
+```
+
+---
