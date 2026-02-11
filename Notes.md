@@ -239,3 +239,46 @@ When we write source code in **TypeScript** and push it to **GitHub**, the **CI/
 ```
 
 ---
+
+## 10. ES Module Imports in TypeScript
+
+In TypeScript, you can use **`import`** syntax from day one — even though Node.js traditionally uses `require`. When TypeScript compiles, it converts `import` into `const ... = require(...)` in the output `.js` file.
+
+### Example
+```typescript
+// TypeScript source (.ts)
+import fs from "fs";
+```
+
+After compilation:
+```javascript
+// Compiled JavaScript output (.js)
+const fs = require("fs");
+```
+
+### Installing Type Definitions for Node.js
+
+When you write `import fs from "fs"`, TypeScript doesn't know the **types** for Node.js built-in modules like `fs`, `path`, `http`, etc. by default. You need to install type definitions:
+
+```bash
+npm i @types/node -D
+```
+
+- `@types/node` provides type definitions for all Node.js built-in modules
+- `-D` installs it as a **devDependency** (only needed during development, not in production)
+
+### Why `-D` (devDependency)?
+Types are only used at **compile time**. The final `.js` output doesn't need them, so they belong in `devDependencies`.
+
+### Other Common Type Packages
+```bash
+npm i @types/express -D   # Types for Express.js
+npm i @types/react -D     # Types for React
+npm i @types/lodash -D    # Types for Lodash
+```
+
+> **Note:** Many modern packages ship with their own types built-in (e.g., `axios`). You only need `@types/*` for packages that don't include their own type definitions.
+
+---
+
+---
